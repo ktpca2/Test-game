@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
-
+    
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
 
@@ -62,13 +62,14 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         //when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if(Input.GetKey(jumpKey) && grounded == true)
         {
-            readyToJump = false;
-
+            Debug.Log("Klapdown<3");
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+
+            readyToJump = false;
         }
     }
 
@@ -102,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
+        
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
     private void ResetJump()
